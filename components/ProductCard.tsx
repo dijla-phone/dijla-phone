@@ -8,27 +8,39 @@ type Product = {
   description: string;
 };
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+}: {
+  product: Product;
+}) {
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition">
+    <div className="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300">
 
-      <div className="relative h-56 bg-gray-100">
+      {/* الصورة */}
+      <div className="relative bg-gray-100 h-64 overflow-hidden">
+
+        <span className="absolute top-4 right-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full z-10">
+          جديد
+        </span>
+
         <Image
           src={product.image}
           alt={product.name}
           fill
-          className="object-contain p-4"
+          className="object-contain p-6 group-hover:scale-110 transition duration-500"
         />
+
       </div>
 
+      {/* المعلومات */}
 
       <div className="p-6">
 
-        <p className="text-blue-600 font-semibold">
+        <p className="text-blue-700 font-bold">
           {product.brand}
         </p>
 
-        <h3 className="text-xl font-bold mt-2 text-gray-800">
+        <h3 className="text-2xl font-bold mt-2">
           {product.name}
         </h3>
 
@@ -36,15 +48,22 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.description}
         </p>
 
-        <p className="text-2xl font-bold mt-4">
-          {product.price}
-        </p>
+        <div className="flex justify-between items-center mt-6">
 
+          <span className="text-3xl font-extrabold text-green-600">
+            {product.price}
+          </span>
+
+          <span className="text-yellow-500">
+            ⭐⭐⭐⭐⭐
+          </span>
+
+        </div>
 
         <a
           href="https://wa.me/9647700000000"
           target="_blank"
-          className="block text-center bg-green-600 text-white mt-5 py-3 rounded-xl hover:bg-green-700 transition"
+          className="block mt-6 bg-green-600 hover:bg-green-700 text-center text-white py-3 rounded-xl font-bold transition"
         >
           اطلب عبر واتساب
         </a>
