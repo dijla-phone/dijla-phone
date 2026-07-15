@@ -1,77 +1,66 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useFavorite } from "@/context/FavoriteContext";
 import { useToast } from "@/components/Toast";
+
+
 export default function FavoriteButton({
   id,
 }: {
   id: number;
 }) {
 
-  const [favorite, setFavorite] = useState(false);
-const { showToast } = useToast();
 
-  useEffect(() => {
+  const {
+    toggleFavorite,
+    isFavorite
+  } = useFavorite();
 
-    const saved = localStorage.getItem("favorites");
 
-    if (saved) {
-      const favorites = JSON.parse(saved);
-
-      setFavorite(favorites.includes(id));
-    }
-
-  }, [id]);
+  const { showToast } = useToast();
 
 
 
-  function toggleFavorite() {
-
-    const saved = localStorage.getItem("favorites");
-
-    let favorites = saved
-      ? JSON.parse(saved)
-      : [];
+  const favorite = isFavorite(id);
 
 
-    if (favorites.includes(id)) {
 
-      favorites = favorites.filter(
-        (item: number) => item !== id
-      );
+  function handleFavorite(){
 
-      setFavorite(false);
+
+    toggleFavorite(id);
+
+
+    if(favorite){
 
       showToast("تمت الإزالة من المفضلة 🤍");
 
-
-    } else {
-
-      favorites.push(id);
-
-      setFavorite(true);
+    }else{
 
       showToast("تمت الإضافة إلى المفضلة ❤️");
 
     }
-
-
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(favorites)
-    );
 
   }
 
 
 
   return (
+
     <button
-      onClick={toggleFavorite}
+
+      onClick={handleFavorite}
+
       className="text-3xl"
+
       title="إضافة للمفضلة"
+
     >
+
       {favorite ? "❤️" : "🤍"}
+
     </button>
+
   );
+
 }

@@ -1,38 +1,65 @@
 import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 
+
 export default function BestProducts() {
+
 
   const bestProducts = products.slice(0, 3);
 
+
+
   return (
-    <section className="bg-white py-12">
+
+    <section className="bg-gray-50 py-16">
+
 
       <div className="max-w-6xl mx-auto px-6">
 
-        <h2 className="text-3xl font-bold text-center mb-8">
+
+        <h2 className="text-4xl font-extrabold text-center mb-4">
+
           ⭐ الأكثر مبيعًا
+
         </h2>
 
 
-        <p className="text-center text-gray-600 mb-10">
-          أفضل الهواتف طلبًا من عملائنا
+
+        <p className="text-center text-gray-600 text-lg mb-12">
+
+          أفضل الهواتف التي يفضلها عملاؤنا
+
         </p>
+
+
 
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {bestProducts.map((product) => (
+
+          {bestProducts.map((product)=>(
+
+
             <ProductCard
+
               key={product.id}
+
               product={product}
+
             />
+
+
           ))}
+
 
         </div>
 
+
       </div>
 
+
     </section>
+
   );
+
 }

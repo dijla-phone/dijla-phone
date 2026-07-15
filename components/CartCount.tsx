@@ -5,16 +5,17 @@ import { useCart } from "@/context/CartContext";
 
 export default function CartCount() {
 
-  const { cart } = useCart();
+  const { totalItems } = useCart();
 
 
   return (
     <>
-      {cart.length > 0 && (
+      {totalItems > 0 && (
         <span className="text-yellow-300 mr-1">
-          ({cart.length})
+          ({totalItems})
         </span>
       )}
     </>
   );
+
 }

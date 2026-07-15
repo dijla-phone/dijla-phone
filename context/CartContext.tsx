@@ -10,29 +10,24 @@ import {
 import { products } from "@/data/products";
 
 
-type Product = {
-  id: number;
-  name: string;
-  price: string;
-  brand: string;
-  image: string;
-  description: string;
+type Product = typeof products[0];
 
-  specs?: {
-    screen: string;
-    ram: string;
-    storage: string;
-    camera: string;
-    battery: string;
-  };
+
+type CartItem = Product & {
+  quantity: number;
 };
 
 
 type CartContextType = {
-  cart: Product[];
+  cart: CartItem[];
   addToCart: (product: Product) => void;
   removeFromCart: (id: number) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
+  clearCart: () => void;
+  totalItems: number;
 };
+
 
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -45,11 +40,10 @@ export function CartProvider({
   children: React.ReactNode;
 }) {
 
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
 
 
-  // تحميل السلة عند فتح الموقع
   useEffect(() => {
 
     const savedCart = localStorage.getItem("cart");
@@ -62,7 +56,6 @@ export function CartProvider({
 
 
 
-  // حفظ السلة عند أي تغيير
   useEffect(() => {
 
     localStorage.setItem(
@@ -74,24 +67,35 @@ export function CartProvider({
 
 
 
-
   function addToCart(product: Product) {
 
-    setCart((prev) => {
+    setCart((prev)=>{
 
-      const exists = prev.some(
-        (item) => item.id === product.id
+      const existing = prev.find(
+        item => item.id === product.id
       );
 
 
-      if (exists) {
-        return prev;
+      if(existing){
+
+        return prev.map(item =>
+          item.id === product.id
+          ? {
+              ...item,
+              quantity:item.quantity + 1
+            }
+          : item
+        );
+
       }
 
 
       return [
         ...prev,
-        product
+        {
+          ...product,
+          quantity:1
+        }
       ];
 
     });
@@ -100,12 +104,11 @@ export function CartProvider({
 
 
 
+  function removeFromCart(id:number){
 
-  function removeFromCart(id: number) {
-
-    setCart((prev) =>
+    setCart(prev =>
       prev.filter(
-        (item) => item.id !== id
+        item => item.id !== id
       )
     );
 
@@ -113,34 +116,98 @@ export function CartProvider({
 
 
 
+  function increaseQuantity(id:number){
+
+    setCart(prev =>
+      prev.map(item =>
+        item.id === id
+        ?
+        {
+          ...item,
+          quantity:item.quantity + 1
+        }
+        :
+        item
+      )
+    );
+
+  }
+
+
+
+  function decreaseQuantity(id:number){
+
+    setCart(prev =>
+      prev.map(item =>
+        item.id === id && item.quantity > 1
+        ?
+        {
+          ...item,
+          quantity:item.quantity - 1
+        }
+        :
+        item
+      )
+    );
+
+  }
+
+
+
+  function clearCart(){
+
+    setCart([]);
+
+  }
+
+
+
+  const totalItems = cart.reduce(
+    (sum,item)=> sum + item.quantity,
+    0
+  );
+
+
 
   return (
+
     <CartContext.Provider
       value={{
         cart,
         addToCart,
         removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
+        clearCart,
+        totalItems
       }}
     >
+
       {children}
+
     </CartContext.Provider>
+
   );
+
 }
 
 
 
 
-export function useCart() {
+export function useCart(){
 
   const context = useContext(CartContext);
 
 
-  if (!context) {
+  if(!context){
+
     throw new Error(
       "useCart must be inside CartProvider"
     );
+
   }
 
 
   return context;
+
 }

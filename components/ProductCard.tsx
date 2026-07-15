@@ -5,14 +5,9 @@ import Link from "next/link";
 import FavoriteButton from "@/components/FavoriteButton";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast";
-type Product = {
-  id: number;
-  name: string;
-  price: string;
-  brand: string;
-  image: string;
-  description: string;
-};
+import { products } from "@/data/products";
+
+type Product = typeof products[0];
 
 export default function ProductCard({
   product,

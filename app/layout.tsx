@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import { CartProvider } from "@/context/CartContext";
+import { FavoriteProvider } from "@/context/FavoriteContext";
+import { SearchProvider } from "@/context/SearchContext";
 import { ToastProvider } from "@/components/Toast";
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+
 
 export const metadata: Metadata = {
   title: "دجلة فون | متجر الهواتف الذكية في العراق",
@@ -26,27 +34,49 @@ export const metadata: Metadata = {
   ],
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
+
     <html
-      lang="ar" dir="rtl"
+      lang="ar"
+      dir="rtl"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+
       <body className="min-h-full flex flex-col">
 
-<CartProvider>
 
-  <ToastProvider>
-    {children}
-  </ToastProvider>
+        <CartProvider>
 
-</CartProvider>
+          <FavoriteProvider>
 
-</body>
+            <SearchProvider>
+
+              <ToastProvider>
+
+                {children}
+
+              </ToastProvider>
+
+            </SearchProvider>
+
+          </FavoriteProvider>
+
+        </CartProvider>
+
+
+      </body>
+
     </html>
+
   );
+
 }
