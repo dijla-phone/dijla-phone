@@ -10,7 +10,22 @@ import {
 import { products } from "@/data/products";
 
 
-type Product = typeof products[0];
+type Product = {
+  id: number;
+  name: string;
+  price: string;
+  brand: string;
+  image: string;
+  description: string;
+
+  specs?: {
+    screen: string;
+    ram: string;
+    storage: string;
+    camera: string;
+    battery: string;
+  };
+};
 
 
 type CartContextType = {
