@@ -1,9 +1,10 @@
+import Header from "@/components/Header";
 import Slider from "@/components/Slider";
 import ProductsSection from "@/components/ProductsSection";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import BestProducts from "@/components/BestProducts";
-
+import Brands from "@/components/Brands";
 
 export default function Home() {
 
@@ -11,10 +12,11 @@ export default function Home() {
 
     <main className="min-h-screen bg-gray-100">
 
+<Header />
 
       <Slider />
 
-
+<Brands />
 
       <section
         id="offers"
