@@ -1,6 +1,12 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import FavoriteButton from "@/components/FavoriteButton";
+import { useCart } from "@/context/CartContext";
+import { useToast } from "@/components/Toast";
 type Product = {
+  id: number;
   name: string;
   price: string;
   brand: string;
@@ -13,26 +19,36 @@ export default function ProductCard({
 }: {
   product: Product;
 }) {
+  const { addToCart } = useCart();
+const { showToast } = useToast();
+  function handleCart() {
+
+  addToCart(product);
+
+  showToast("تمت الإضافة إلى السلة 🛒");
+
+}
   return (
-    <div className="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300">
+    <div className="bg-white rounded-3xl shadow-md hover:shadow-2xl transition overflow-hidden">
 
-      {/* الصورة */}
-      <div className="relative bg-gray-100 h-64 overflow-hidden">
+      <Link href={`/products/${product.id}`}>
 
-        <span className="absolute top-4 right-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full z-10">
-          جديد
-        </span>
+        <div className="relative h-64 bg-gray-100">
 
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-contain p-6 group-hover:scale-110 transition duration-500"
-        />
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-contain p-6 hover:scale-105 transition"
+          />
 
-      </div>
+        </div>
 
-      {/* المعلومات */}
+      </Link>
+
+<div className="flex justify-between items-center px-6 pt-5">
+  <FavoriteButton id={product.id} />
+</div>
 
       <div className="p-6">
 
@@ -48,26 +64,38 @@ export default function ProductCard({
           {product.description}
         </p>
 
-        <div className="flex justify-between items-center mt-6">
 
-          <span className="text-3xl font-extrabold text-green-600">
-            {product.price}
-          </span>
+        <p className="text-green-600 text-2xl font-bold mt-5">
+          {product.price}
+        </p>
 
-          <span className="text-yellow-500">
-            ⭐⭐⭐⭐⭐
-          </span>
 
-        </div>
-
-        <a
-          href="https://wa.me/9647700000000"
-          target="_blank"
-          className="block mt-6 bg-green-600 hover:bg-green-700 text-center text-white py-3 rounded-xl font-bold transition"
+        <Link
+          href={`/products/${product.id}`}
+          className="block text-center mt-5 bg-blue-700 text-white py-3 rounded-xl hover:bg-blue-800"
         >
-          اطلب عبر واتساب
-        </a>
+          عرض التفاصيل
+       
+        </Link>
 
+<button
+  onClick={handleCart}
+  className="block w-full text-center mt-3 bg-yellow-500 text-white py-3 rounded-xl hover:bg-yellow-600"
+>
+  🛒 أضف إلى السلة
+</button>
+
+<a
+  href={`https://wa.me/9647700000000?text=${encodeURIComponent(
+    `السلام عليكم، أريد طلب ${product.name}
+السعر: ${product.price}`
+  )}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-center mt-3 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700"
+>
+  اطلب عبر واتساب
+</a>
       </div>
 
     </div>

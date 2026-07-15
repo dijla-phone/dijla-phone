@@ -1,17 +1,18 @@
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
+import Slider from "@/components/Slider";
 import ProductsSection from "@/components/ProductsSection";
 import Footer from "@/components/Footer";
-
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BestProducts from "@/components/BestProducts";
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-100">
 
       <Header />
 
-      <Hero />
+      <Slider />
 
-      <section className="bg-blue-700 text-white py-10 px-6">
+      <section id="offers" className="bg-blue-700 text-white py-10 px-6">
         <div className="max-w-6xl mx-auto text-center">
 
           <h2 className="text-3xl font-bold">
@@ -65,9 +66,13 @@ export default function Home() {
         </div>
       </section>
 
+<BestProducts />
+
       <ProductsSection />
 
       <Footer />
+
+<WhatsAppButton />
 
     </main>
   );
