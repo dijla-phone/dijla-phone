@@ -132,5 +132,6 @@ export function useCart() {
     throw new Error("useCart must be inside CartProvider");
   }
 
+  
   return context;
 }
