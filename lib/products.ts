@@ -1,18 +1,32 @@
 import { supabase } from "./supabase";
-import { Product } from "@/types/product";
 
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts() {
+
   const { data, error } = await supabase
     .from("products")
     .select("*")
     .order("id");
 
-  console.log("Supabase Data:", data);
-  console.log("Supabase Error:", error);
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+
+}
+
+export async function getProduct(id: number) {
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data as Product[];
+  return data;
+
 }

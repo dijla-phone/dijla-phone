@@ -1,5 +1,5 @@
 import ProductCard from "@/components/ProductCard";
-import { getProducts } from "@/services/product.service";
+import { getProducts } from "@/lib/products";
 
 export default async function CategoryPage({
   params,
