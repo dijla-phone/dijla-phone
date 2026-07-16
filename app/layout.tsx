@@ -5,78 +5,69 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { FavoriteProvider } from "@/context/FavoriteContext";
 import { SearchProvider } from "@/context/SearchContext";
+import { SettingsProvider } from "@/context/SettingsContext";
+
 import { ToastProvider } from "@/components/Toast";
 
+import { getSettings } from "@/lib/settings";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-
-
 export const metadata: Metadata = {
   title: "دجلة فون | متجر الهواتف الذكية في العراق",
   description:
     "دجلة فون متجر لبيع الهواتف الأصلية بأفضل الأسعار مع خدمة التوصيل داخل العراق",
-  keywords: [
-    "دجلة فون",
-    "هواتف العراق",
-    "iPhone العراق",
-    "Samsung العراق",
-    "شراء موبايلات"
-  ],
 };
 
-
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
 
+  const settings = await getSettings();
 
   return (
-
     <html
       lang="ar"
       dir="rtl"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
 
-      <body className="min-h-full flex flex-col">
+      <body>
 
+        <SettingsProvider settings={settings}>
 
-        <CartProvider>
+          <CartProvider>
 
-          <FavoriteProvider>
+            <FavoriteProvider>
 
-            <SearchProvider>
+              <SearchProvider>
 
-              <ToastProvider>
+                <ToastProvider>
 
-                {children}
+                  {children}
 
-              </ToastProvider>
+                </ToastProvider>
 
-            </SearchProvider>
+              </SearchProvider>
 
-          </FavoriteProvider>
+            </FavoriteProvider>
 
-        </CartProvider>
+          </CartProvider>
 
+        </SettingsProvider>
 
       </body>
 
     </html>
-
   );
-
 }

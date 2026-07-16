@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/HeaderClient";
 import Slider from "@/components/Slider";
 import ProductsSectionSupabase from "@/components/ProductsSectionSupabase";
 import Footer from "@/components/Footer";

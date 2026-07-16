@@ -9,14 +9,13 @@ import CartCount from "@/components/CartCount";
 import { useSearch } from "@/context/SearchContext";
 import { useSettings } from "@/context/SettingsContext";
 
-export default function Header() {
+export default function HeaderClient() {
 
   const { search, setSearch } = useSearch();
 
   const settings = useSettings();
 
   return (
-
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-lg">
 
       <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between gap-8">
@@ -41,15 +40,11 @@ export default function Header() {
           <div>
 
             <h1 className="text-3xl font-extrabold text-blue-700 leading-none">
-
               {settings.store_name}
-
             </h1>
 
             <p className="text-sm text-gray-500 mt-1">
-
-              {settings.phone}
-
+              {settings.tagline}
             </p>
 
           </div>
@@ -67,53 +62,26 @@ export default function Header() {
           />
 
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xl">
-
             🔍
-
           </span>
 
         </div>
 
         <nav className="flex items-center gap-6 font-semibold text-gray-700">
 
-          <Link
-            href="/"
-            className="hover:text-blue-700 transition"
-          >
-            الرئيسية
-          </Link>
+          <Link href="/">الرئيسية</Link>
 
-          <Link
-            href="/phones"
-            className="hover:text-blue-700 transition"
-          >
-            الهواتف
-          </Link>
+          <Link href="/phones">الهواتف</Link>
 
-          <Link
-            href="/#offers"
-            className="hover:text-blue-700 transition"
-          >
-            العروض
-          </Link>
+          <Link href="/#offers">العروض</Link>
 
-          <Link
-            href="/about"
-            className="hover:text-blue-700 transition"
-          >
-            من نحن
-          </Link>
+          <Link href="/about">من نحن</Link>
 
-          <Link
-            href="/contact"
-            className="hover:text-blue-700 transition"
-          >
-            تواصل
-          </Link>
+          <Link href="/contact">تواصل</Link>
 
           <Link
             href="/favorites"
-            className="relative flex items-center justify-center w-11 h-11 rounded-full bg-red-50 hover:bg-red-100 transition"
+            className="relative flex items-center justify-center w-11 h-11 rounded-full bg-red-50"
           >
 
             ❤️
@@ -128,7 +96,7 @@ export default function Header() {
 
           <Link
             href="/cart"
-            className="relative flex items-center justify-center w-11 h-11 rounded-full bg-green-50 hover:bg-green-100 transition"
+            className="relative flex items-center justify-center w-11 h-11 rounded-full bg-green-50"
           >
 
             🛒
@@ -146,7 +114,5 @@ export default function Header() {
       </div>
 
     </header>
-
   );
-
 }
