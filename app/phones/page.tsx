@@ -1,15 +1,17 @@
-import PhonesList from "@/components/PhonesList";
 import Link from "next/link";
+import PhonesList from "@/components/PhonesList";
+import { getProducts } from "@/lib/products";
 
-export default function PhonesPage() {
+export default async function PhonesPage() {
+
+  const products = await getProducts();
+
   return (
     <main className="min-h-screen bg-gray-100 py-12">
-
 
       <h1 className="text-4xl font-bold text-center mb-10">
         📱 جميع الهواتف
       </h1>
-
 
       <div className="flex justify-center gap-4 mb-10 flex-wrap">
 
@@ -20,14 +22,12 @@ export default function PhonesPage() {
           🍎 Apple
         </Link>
 
-
         <Link
           href="/category/Samsung"
           className="bg-blue-700 text-white px-6 py-3 rounded-xl"
         >
           Samsung
         </Link>
-
 
         <Link
           href="/category/Xiaomi"
@@ -38,9 +38,7 @@ export default function PhonesPage() {
 
       </div>
 
-
-      <PhonesList />
-
+      <PhonesList products={products} />
 
     </main>
   );
