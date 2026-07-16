@@ -1,5 +1,5 @@
 import ProductCard from "@/components/ProductCard";
-import { products } from "@/data/products";
+import { getProducts } from "@/services/product.service";
 
 export default async function CategoryPage({
   params,
@@ -9,23 +9,21 @@ export default async function CategoryPage({
 
   const { brand } = await params;
 
+  const products = await getProducts();
 
   const filteredProducts = products.filter(
     (product) =>
-      product.brand.toLowerCase() === brand.toLowerCase()
+      product.brand.toLowerCase() === decodeURIComponent(brand).toLowerCase()
   );
-
 
   return (
     <main className="min-h-screen bg-gray-100 py-12">
 
       <div className="max-w-6xl mx-auto px-6">
 
-
         <h1 className="text-4xl font-bold text-center mb-10">
-          📱 هواتف {brand}
+          📱 هواتف {decodeURIComponent(brand)}
         </h1>
-
 
         {filteredProducts.length === 0 ? (
 
@@ -49,7 +47,6 @@ export default async function CategoryPage({
           </div>
 
         )}
-
 
       </div>
 
