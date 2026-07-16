@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
+import { Product } from "@/types/product";
 import { products } from "@/data/products";
 
 export default function ProductsSection() {

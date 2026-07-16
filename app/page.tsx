@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Slider from "@/components/Slider";
-import ProductsSection from "@/components/ProductsSection";
+import ProductsSectionSupabase from "@/components/ProductsSectionSupabase";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import BestProducts from "@/components/BestProducts";
@@ -116,7 +116,7 @@ export default function Home() {
 
 
 
-      <ProductsSection />
+      <ProductsSectionSupabase />
 
 
 
